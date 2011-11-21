@@ -1,0 +1,55 @@
+
+link(rel='stylesheet', href='/stylesheets/deck.core.css')
+link(rel='stylesheet', href='/stylesheets/sh_style.css')
+link(rel='stylesheet', href='/stylesheets/themes/style/neon.css')
+link(rel='stylesheet', href='/stylesheets/themes/transition/horizontal-slide.css')
+script(type='text/javascript', src='/javascripts/modernizr.custom.js');
+header
+  nav
+    p 現在接続している人は
+      span#count
+      人います
+
+section(class="slide", id="title-slide")
+  h1
+    a(href="http://hirapong.com")"VCS in Mixi"
+
+section(class="slide", id="introduction")
+  h2 Introduction to Git
+  p Here is a list of points:
+  ul
+    li(class="slide") Point 1
+    li(class="slide") Point 2
+    li(class="slide") Point 3
+
+section(class="slide")
+  h2 金言 
+  blockquote(cite="http://example.com")
+    p 1年でできない奴はやめろ会社.
+    p
+      cite Kazuyoshi kato.
+
+section(class="slide")
+  h2 Git vs Subversion
+  iframe(src="http://whygitisbetterthanx.com/")Why Git is Better than X
+
+section(class="slide")
+  h2 Try git command
+
+  form(id="git_form", action="/javascripts/init.js", method="post")
+    textarea(id="git_command", class="git_sh", cols="110", rows="10")
+
+  br
+  pre(id="git_result", class="sh_sh sh_sourceCode")
+
+script(type='text/javascript', src='/javascripts/jquery-1.7.min.js');
+
+script(type='text/javascript', src='/javascripts/deck/core/deck.core.js');
+script(type='text/javascript', src='/javascripts/deck/extensions/goto/deck.goto.js');
+script(type='text/javascript', src='/javascripts/deck/extensions/navigation/deck.navigation.js');
+script(type='text/javascript', src='/javascripts/deck/extensions/status/deck.status.js');
+script(type='text/javascript', src='/javascripts/deck/extensions/hash/deck.hash.js');
+script(type='text/javascript', src='/javascripts/sh_main.js');
+script(type='text/javascript', src='/javascripts/sh_sh.min.js');
+script(type='text/javascript', src='/socket.io/socket.io.js');
+script(type='text/javascript', src='/javascripts/init.js');

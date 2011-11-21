@@ -1,0 +1,84 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: orange
+}
+
+section.slide iframe {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+section pre.sh_sh {
+    padding: 0.4em;
+    font-size: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+section textarea.git_sh {
+    padding: 0.4em;
+    font-size: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+section form {
+    padding: 0.4em;
+    font-size: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+body > header {
+  width: 100%;
+  min-height: 32px;
+  background: #333;
+  overflow: hidden;
+  position: relative;
+  z-index: 4;
+}
+body > header > nav {
+  margin: 0 auto;
+  width: 960px;
+}
+body > header > nav > h1 {
+  float: left;
+  line-height: 32px;
+  font-size: 24px;
+  font-weight: normal;
+  padding: 0 10px;
+}
+body > header > nav > h1 > a {
+  color: #fff;
+  text-decoration: none;
+}
+body > header > nav > ul {
+  float: right;
+  font-weight: bold;
+  color: #fff;
+}
+body > header > nav > ul li {
+  float: left;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 20px;
+  color: #fff !important;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+body > header > nav > ul li a {
+  display: block;
+  height: 32px;
+  line-height: 32px;
+  color: #888 !important;
+  text-decoration: none;
+  text-shadow: none;
+}
+body > header > nav > ul li a:hover, body > header > nav > ul li a:focus {
+  color: #ddd !important;
+}
