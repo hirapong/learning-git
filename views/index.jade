@@ -1,8 +1,11 @@
-
 link(rel='stylesheet', href='/stylesheets/deck.core.css')
 link(rel='stylesheet', href='/stylesheets/sh_style.css')
 link(rel='stylesheet', href='/stylesheets/themes/style/neon.css')
 link(rel='stylesheet', href='/stylesheets/themes/transition/horizontal-slide.css')
+link(rel='stylesheet', href='/javascripts/deck/extensions/goto/deck.goto.css');
+link(rel='stylesheet', href='/javascripts/deck/extensions/navigation/deck.navigation.css');
+link(rel='stylesheet', href='/javascripts/deck/extensions/status/deck.status.css');
+link(rel='stylesheet', href='/javascripts/deck/extensions/hash/deck.hash.css');
 script(type='text/javascript', src='/javascripts/modernizr.custom.js');
 header
   nav
@@ -14,28 +17,86 @@ section(class="slide", id="title-slide")
   h1
     a(href="http://hirapong.com")"VCS in Mixi"
 
+// 今日はこの辺の話をするよ
 section(class="slide", id="introduction")
   h2 Introduction to Git
-  p Here is a list of points:
+  h3 a table of contents
   ul
-    li(class="slide") Point 1
-    li(class="slide") Point 2
-    li(class="slide") Point 3
+    li(class="slide")
+      h3 What's VCS
+    li(class="slide")
+      h3 About Git
+    li(class="slide")
+      h3 Basic usage of Git
+    li(class="slide")
+      h3 Development with Git
+    li(class="slide")
+      h3 Try using Git
+    li(class="slide")
+      h3 How to use VCS in Mixi
+    li(class="slide")
+      h3 Introduction of some useful Tools
 
+// バージョン管理システムとは
 section(class="slide")
-  h2 金言
-  blockquote(cite="http://example.com")
-    p 1年でできない奴はやめろ会社.
-    p
-      cite Kazuyoshi kato.
+  h2 What's VCS
+  h3 バージョン管理システム(Version Control System)
+  li
+    h3 仲間と差分を同期したり、定期的に作業をバックアップすることができる
+  li
+    h3 構成管理(configulation management)ができる
+    h5 * メジャーアップデートを開発する一方で現行バージョンのバグ修正をしたり
+    h5 * いつどの変更でバグが生じたか確認したり
 
+// どれか使ったことある？
+section(class="slide")
+  h2 What's VCS
+  h3 Have you ever use some VCS??
+  img(src='/images/some_vcs.png')
+
+// VCSは3種類に大別できます
+section(class="slide")
+  h2 What's VCS
+  table
+    thead
+      tr
+        th type
+        th about
+        th package
+    tbody
+      tr
+        td 個別VCS
+        td ファイル単位で個別システムで
+           \バージョン管理
+        td SCCR,RCS
+      tr
+        td 集中型VCS
+        td リポジトリをサーバで一元管理し、操作はクライアントから
+        td Subversion, CVS, Perforce
+      tr
+        td 分散型VCS
+        td リポジトリをクライアントでも管理する
+        td 
+          strong Git
+          , Mercurial, Bazaar
+
+// 特にGitはほにゃららaaa
+section(class="slide")
+  h2 About Git
+
+
+// Gitと他のVCSを比較した資料を見てみよう
 section(class="slide")
   h2 Git vs Subversion
   iframe(src="http://whygitisbetterthanx.com/")Why Git is Better than X
 
+// まずは基本的開発フローを説明するよ（一人で使う場合）
 section(class="slide")
   h2 Work Flaw
 
+// aaa
+
+// 実際にコマンドを叩いて説明するよ
 section(class="slide")
   h2 Try git command
 
@@ -45,8 +106,23 @@ section(class="slide")
   br
   pre(id="git_result", class="sh_sh sh_sourceCode")
 
-script(type='text/javascript', src='/javascripts/jquery-1.7.min.js');
 
+section(class="slide")
+  h2 金言
+  blockquote(cite="http://example.com")
+    p 1年でできない奴はやめろ会社.
+    p
+      cite Kazuyoshi kato.
+
+
+p(class="deck-status")
+    span(class="deck-status-current")
+    /
+    span(class="deck-status-total")
+    span(class="deck-status-viewer")(0)
+
+
+script(type='text/javascript', src='/javascripts/jquery-1.7.min.js');
 script(type='text/javascript', src='/javascripts/deck/core/deck.core.js');
 script(type='text/javascript', src='/javascripts/deck/extensions/goto/deck.goto.js');
 script(type='text/javascript', src='/javascripts/deck/extensions/navigation/deck.navigation.js');

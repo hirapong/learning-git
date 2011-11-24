@@ -1,7 +1,17 @@
 $(function() {
-  //sh_highlightDocument('lang/', '.js');
-  sh_highlightDocument('lang/', '.shell');
-  $.deck('.slide');
+    //sh_highlightDocument('lang/', '.js');
+    sh_highlightDocument('lang/', '.shell');
+    $.deck('.slide');
+    //$.extend(true, $.deck.defaults, {
+    //   classes: {
+    //      navDisabled: 'deck-nav-disabled'
+    //   },
+    //   selectors: {
+    //      nextLink: '.deck-next-link',
+    //      previousLink: '.deck-prev-link'
+    //   }
+    //});
+
     var textarea = $("textarea");
     var socket = io.connect();
 
