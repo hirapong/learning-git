@@ -7,6 +7,17 @@ link(rel='stylesheet', href='/javascripts/deck/extensions/navigation/deck.naviga
 link(rel='stylesheet', href='/javascripts/deck/extensions/status/deck.status.css');
 link(rel='stylesheet', href='/javascripts/deck/extensions/hash/deck.hash.css');
 script(type='text/javascript', src='/javascripts/modernizr.custom.js');
+script(type='text/javascript', src='/javascripts/jquery-1.7.min.js');
+script(type='text/javascript', src='/javascripts/deck/core/deck.core.js');
+script(type='text/javascript', src='/javascripts/deck/extensions/goto/deck.goto.js');
+script(type='text/javascript', src='/javascripts/deck/extensions/navigation/deck.navigation.js');
+script(type='text/javascript', src='/javascripts/deck/extensions/status/deck.status.js');
+script(type='text/javascript', src='/javascripts/deck/extensions/hash/deck.hash.js');
+script(type='text/javascript', src='/javascripts/sh_main.js');
+script(type='text/javascript', src='/javascripts/sh_sh.min.js');
+script(type='text/javascript', src='/socket.io/socket.io.js');
+script(type='text/javascript', src='/javascripts/init.js');
+
 header
   nav
     p 現在接続している人は
@@ -96,7 +107,9 @@ section(class="slide")
 
 // まずは基本的開発フローを説明するよ（一人で使う場合）
 section(class="slide")
-  h2 Work Flaw
+  h2 WorkFlow
+  article
+    // canvas test
 
 // aaa
 
@@ -126,13 +139,3 @@ p(class="deck-status")
     span(class="deck-status-viewer")(0)
 
 
-script(type='text/javascript', src='/javascripts/jquery-1.7.min.js');
-script(type='text/javascript', src='/javascripts/deck/core/deck.core.js');
-script(type='text/javascript', src='/javascripts/deck/extensions/goto/deck.goto.js');
-script(type='text/javascript', src='/javascripts/deck/extensions/navigation/deck.navigation.js');
-script(type='text/javascript', src='/javascripts/deck/extensions/status/deck.status.js');
-script(type='text/javascript', src='/javascripts/deck/extensions/hash/deck.hash.js');
-script(type='text/javascript', src='/javascripts/sh_main.js');
-script(type='text/javascript', src='/javascripts/sh_sh.min.js');
-script(type='text/javascript', src='/socket.io/socket.io.js');
-script(type='text/javascript', src='/javascripts/init.js');

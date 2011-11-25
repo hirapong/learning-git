@@ -52,19 +52,25 @@ io.sockets.on('connection', function(client) {  //connect
     count++;
     console.log("connected to client");
     io.sockets.emit('message', { value: count });
-  client.on('message', function(message) {  // process shell command
-      console.log("message");
-      var result =runShellCommand(message.value, io);
-      console.log("receive:" + result);
-  });
-  client.on('command', function(message) {  // process shell command
-      io.sockets.emit('git_command', { value: message.value });
-  });
-  client.on('disconnect', function() {
-    // disconnect
-    count--;
-    io.sockets.emit('message', { value: count });
-  });
+    client.on('message', function(message) {  //  shell result
+        console.log("message");
+        var result =runShellCommand(message.value, io);
+        console.log("receive:" + result);
+    });
+    client.on('command', function(message) {  //  shell command
+        io.sockets.emit('git_command', { value: message.value });
+    });
+    client.on('drawClick', function(data) {
+        io.sockets.emit('draw', {
+            x: data.x,
+            y: data.y,
+            type: data.type
+        });
+    });
+    client.on('disconnect', function() {      // disconnect
+        count--;
+        io.sockets.emit('message', { value: count });
+    });
 });
 
 
