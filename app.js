@@ -60,7 +60,11 @@ io.sockets.on('connection', function(client) {  //connect
     client.on('command', function(message) {  //  shell command
         io.sockets.emit('git_command', { value: message.value });
     });
-    client.on('drawClick', function(data) {
+    client.on('receiveCanvas', function(data) {
+            console.log(data);
+        if(data === undefined) {
+            return io.sockets.emit('clearCanvas', {});
+        }
         io.sockets.emit('draw', {
             x: data.x,
             y: data.y,

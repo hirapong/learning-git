@@ -20,24 +20,26 @@ $(function() {
         drawer.canvas = document.createElement('canvas');
         drawer.canvas.height = 400;
         drawer.canvas.width = 800;
-        document.getElementsByTagName('article')[0].appendChild(drawer.canvas);
+        $('article').append(drawer.canvas);
         drawer.ctx = drawer.canvas.getContext("2d");
         drawer.ctx.fillStyle = "solid";
         drawer.ctx.strokeStyle = "#ECD018";
         drawer.ctx.lineWidth = 5;
         drawer.ctx.lineCap = "round";
         drawer.draw = function(x, y, type) {
-            if (type === "dragstart") {
+            if (type === "mousedown") {
                 drawer.ctx.beginPath();
                 return drawer.ctx.moveTo(x, y);
-            } else if (type === "drag") {
+            } else if (type === "mousemove") {
                 drawer.ctx.lineTo(x, y);
                 return drawer.ctx.stroke();
-            } else {
+            } else if (type === "mouseup") {
                 return drawer.ctx.closePath();
             }
         };
-        console.log(drawer );
+        drawer.clear = function() {
+            drawer.ctx.clearRect(0, 0, drawer.canvas.width, drawer.canvas.height);
+        };
     };
     console.log("test");
     socket.on('connect', function(msg) {
@@ -63,13 +65,17 @@ $(function() {
         $('#git_result').text(message.value);
     });
     socket.on('draw', function(data) {
+        console.log(data);
         return drawer.draw(data.x, data.y, data.type);
     });
+    socket.on('clearCanvas', function(data) {
+        return drawer.clear();
+    });
 
+    var isDrawing = 0;
     // イベント処理
-    $('article').live( ' mousedown mousemove mouseup', function(e) {
+    $('canvas').live( ' mousedown mousemove mouseup', function(e) {
         var offset, type, x, y;
-        //console.log(e);
         type = e.handleObj.type;
         offset = $(this).offset();
         //console.log(offset);
@@ -77,21 +83,35 @@ $(function() {
         e.offsetY = e.clientY - offset.top;
         x = e.offsetX;
         y = e.offsetY;
-        drawer.draw(x, y, type);
-        socket.emit('drawClick', {
-            x: x,
-            y: y,
-            type: type
-        });
+        //drawer.draw(x, y, type);
+
+
+        if (type === "mousedown") {
+            isDrawing = 1;
+        }
+        if( isDrawing === 1 ) {
+            socket.emit('receiveCanvas', {
+                x: x,
+                y: y,
+                type: type
+            });
+        }
+        if (type === "mouseup") {
+            isDrawing = 0;
+        }
     });
     // $('article').mousedown(function(e) {
     //     console.log("click");
     // });
+    window.addEventListener('keydown', function(e){
+        if(e.keyCode && e.keyCode === 81) {
+            console.log("click");
+            socket.emit('receiveCanvas');
+        }
+    });
     textarea.keydown(function(e){
         socket.emit('command', { value: textarea.val() });
-        if(e.keyCode && e.keyCode == 13) {
-            console.log("keydown!");
-            console.log(textarea.val());
+        if(e.keyCode && e.keyCode === 13) {
             socket.emit('message', { value: textarea.val() });
         }
     });
