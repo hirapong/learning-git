@@ -18,10 +18,15 @@ $(function() {
 
     drawer.init = function() {
         drawer.canvas = document.createElement('canvas');
-        drawer.canvas.height = 400;
-        drawer.canvas.width = 800;
+        console.log(drawer.canvas);
+        drawer.canvas.height = 600;
+        drawer.canvas.width  = 800;
         $('article').append(drawer.canvas);
+        var flowImage = new Image();
+        flowImage.src = '/images/some_vcs.png';
+            console.log(flowImage);
         drawer.ctx = drawer.canvas.getContext("2d");
+        drawer.ctx.drawImage(flowImage, 0, 0);
         drawer.ctx.fillStyle = "solid";
         drawer.ctx.strokeStyle = "#ECD018";
         drawer.ctx.lineWidth = 5;
@@ -39,6 +44,11 @@ $(function() {
         };
         drawer.clear = function() {
             drawer.ctx.clearRect(0, 0, drawer.canvas.width, drawer.canvas.height);
+            var flowImage = new Image();
+            flowImage.src = '/images/some_vcs.png';
+            console.log(flowImage);
+            drawer.ctx.drawImage(flowImage, 0, 0);
+            return;
         };
     };
     console.log("test");

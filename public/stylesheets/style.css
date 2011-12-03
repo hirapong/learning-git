@@ -108,7 +108,7 @@ body > header > nav > ul li a:hover, body > header > nav > ul li a:focus {
   color: #ddd !important;
 }
 
-canvas {
+body > canvas {
     margin: 20px auto;
     border: 5px solid #E8E8E8;
     display: block;
