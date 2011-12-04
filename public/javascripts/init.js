@@ -1,3 +1,52 @@
+
+function Drawer(bg) {
+
+    this.id = bg.id;
+    this.canvas = document.createElement('canvas');
+    console.log(this.canvas);
+    this.canvas.height = 600;
+    this.canvas.width  = 850;
+    this.canvas.class  = bg.id;
+    $('#' + bg.id).append(this.canvas);
+        //console.log(image);
+    this.ctx = this.canvas.getContext("2d");
+    this.ctx.fillStyle = "solid";
+    this.ctx.strokeStyle = "#FF6600";
+    this.ctx.lineWidth = 5;
+    this.ctx.lineCap = "round";
+    this.image = new Image();
+    this.image.src = bg.imgPath;
+
+    this.init = function() {
+        console.log("init");
+        console.log(this.image);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.drawImage(this.image, 0, 0,this.image.width, this.image.height);
+        return;
+    };
+
+    this.image.onload = this.init();
+
+    this.draw = function(x, y, type) {
+        if (type === "mousedown") {
+            this.ctx.beginPath();
+            return this.ctx.moveTo(x, y);
+        } else if (type === "mousemove") {
+            this.ctx.lineTo(x, y);
+            return this.ctx.stroke();
+        } else if (type === "mouseup") {
+            return this.ctx.closePath();
+        }
+    };
+    this.clear = function() {
+        console.log("clear");
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.init;
+        return;
+    };
+
+}
+
 $(function() {
     //sh_highlightDocument('lang/', '.js');
     sh_highlightDocument('lang/', '.shell');
@@ -12,89 +61,61 @@ $(function() {
     //   }
     //});
 
+    var imageMap = [
+        { id:'sharing' , imgPath: '/images/share_files.png' },
+        { id:'scm' , imgPath: '/images/scm.png' },
+        { id:'vcs'     , imgPath: '/images/some_vcs.png' },
+        { id:'gitAbout', imgPath: '/images/git_about.png' }
+    ];
+
+    var drawers = _.map( imageMap, function(elem) {
+        return new Drawer(elem);
+    });
+
     var textarea = $("textarea");
     var socket = io.connect();
-    var drawer = {};
 
-    drawer.init = function() {
-        drawer.canvas = document.createElement('canvas');
-        console.log(drawer.canvas);
-        drawer.canvas.height = 600;
-        drawer.canvas.width  = 800;
-        $('article').append(drawer.canvas);
-        var flowImage = new Image();
-        flowImage.src = '/images/some_vcs.png';
-            console.log(flowImage);
-        drawer.ctx = drawer.canvas.getContext("2d");
-        drawer.ctx.drawImage(flowImage, 0, 0);
-        drawer.ctx.fillStyle = "solid";
-        drawer.ctx.strokeStyle = "#ECD018";
-        drawer.ctx.lineWidth = 5;
-        drawer.ctx.lineCap = "round";
-        drawer.draw = function(x, y, type) {
-            if (type === "mousedown") {
-                drawer.ctx.beginPath();
-                return drawer.ctx.moveTo(x, y);
-            } else if (type === "mousemove") {
-                drawer.ctx.lineTo(x, y);
-                return drawer.ctx.stroke();
-            } else if (type === "mouseup") {
-                return drawer.ctx.closePath();
-            }
-        };
-        drawer.clear = function() {
-            drawer.ctx.clearRect(0, 0, drawer.canvas.width, drawer.canvas.height);
-            var flowImage = new Image();
-            flowImage.src = '/images/some_vcs.png';
-            console.log(flowImage);
-            drawer.ctx.drawImage(flowImage, 0, 0);
-            return;
-        };
-    };
-    console.log("test");
     socket.on('connect', function(msg) {
       console.log("connected to server");
       console.log(socket.socket.transport.sessid);
     });
 
-    //受信部
+    // receive
     socket.on('message', function(message) {
-        console.log("received");
-        console.log(message.value);
         $('#count').text(message.value);
     });
 
     socket.on('git_command', function(message) {
-        console.log("git!!");
-        console.log(message.value);
         $('#git_command').text(message.value);
     });
     socket.on('git_result', function(message) {
-        console.log("git!!");
-        console.log(message.value);
         $('#git_result').text(message.value);
     });
     socket.on('draw', function(data) {
-        console.log(data);
-        return drawer.draw(data.x, data.y, data.type);
+        _.each( drawers, function( drawer ) {
+            if ( drawer.id == data.id ) {
+                drawer.draw(data.x, data.y, data.type);
+            }
+        });
     });
     socket.on('clearCanvas', function(data) {
-        return drawer.clear();
+        _.each( drawers, function( drawer ) {
+            drawer.clear();
+            drawer.init();
+        });
     });
 
     var isDrawing = 0;
-    // イベント処理
+    // handle event
     $('canvas').live( ' mousedown mousemove mouseup', function(e) {
         var offset, type, x, y;
         type = e.handleObj.type;
+        id   = e.currentTarget.class;
         offset = $(this).offset();
-        //console.log(offset);
         e.offsetX = e.clientX - offset.left;
         e.offsetY = e.clientY - offset.top;
         x = e.offsetX;
         y = e.offsetY;
-        //drawer.draw(x, y, type);
-
 
         if (type === "mousedown") {
             isDrawing = 1;
@@ -103,19 +124,18 @@ $(function() {
             socket.emit('receiveCanvas', {
                 x: x,
                 y: y,
-                type: type
+                type: type,
+                id  : id
             });
         }
         if (type === "mouseup") {
             isDrawing = 0;
         }
     });
-    // $('article').mousedown(function(e) {
-    //     console.log("click");
-    // });
+
+    // clear canvas by typing 'q'
     window.addEventListener('keydown', function(e){
-        if(e.keyCode && e.keyCode === 81) {
-            console.log("click");
+        if(e.keyCode && e.keyCode == 81) {
             socket.emit('receiveCanvas');
         }
     });
@@ -126,7 +146,9 @@ $(function() {
         }
     });
 
-    $(function() {
-        return drawer.init();
-    });
+    // _.each( drawers, function( drawer ) {
+    //     drawer.init();
+    // });
+
 });
+

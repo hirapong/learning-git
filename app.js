@@ -52,8 +52,8 @@ io.sockets.on('connection', function(client) {  //connect
     count++;
     console.log("connected to client");
     io.sockets.emit('message', { value: count });
+
     client.on('message', function(message) {  //  shell result
-        console.log("message");
         var result =runShellCommand(message.value, io);
         console.log("receive:" + result);
     });
@@ -61,14 +61,14 @@ io.sockets.on('connection', function(client) {  //connect
         io.sockets.emit('git_command', { value: message.value });
     });
     client.on('receiveCanvas', function(data) {
-            console.log(data);
         if(data === undefined) {
             return io.sockets.emit('clearCanvas', {});
         }
         io.sockets.emit('draw', {
-            x: data.x,
-            y: data.y,
-            type: data.type
+            x    : data.x,
+            y    : data.y,
+            type : data.type,
+            id   : data.id
         });
     });
     client.on('disconnect', function() {      // disconnect

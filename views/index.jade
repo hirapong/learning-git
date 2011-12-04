@@ -8,6 +8,7 @@ link(rel='stylesheet', href='/javascripts/deck/extensions/status/deck.status.css
 link(rel='stylesheet', href='/javascripts/deck/extensions/hash/deck.hash.css');
 script(type='text/javascript', src='/javascripts/modernizr.custom.js');
 script(type='text/javascript', src='/javascripts/jquery-1.7.min.js');
+script(type='text/javascript', src='/javascripts/underscore/underscore-min.js');
 script(type='text/javascript', src='/javascripts/deck/core/deck.core.js');
 script(type='text/javascript', src='/javascripts/deck/extensions/goto/deck.goto.js');
 script(type='text/javascript', src='/javascripts/deck/extensions/navigation/deck.navigation.js');
@@ -16,7 +17,6 @@ script(type='text/javascript', src='/javascripts/deck/extensions/hash/deck.hash.
 script(type='text/javascript', src='/javascripts/sh_main.js');
 script(type='text/javascript', src='/javascripts/sh_sh.min.js');
 script(type='text/javascript', src='/socket.io/socket.io.js');
-script(type='text/javascript', src='/javascripts/init.js');
 
 header
   nav
@@ -51,6 +51,9 @@ section(class="slide", id="introduction")
 section(class="slide")
   h2 What's VCS
   h3 バージョン管理システム(Version Control System)
+  h4 &nbsp;&nbsp;&nbsp;ファイルの履歴を保存するシステム
+
+  h3 利点
   li
     h3 仲間と差分を同期したり、定期的に作業をバックアップすることができる
   li
@@ -58,11 +61,27 @@ section(class="slide")
     h5 * メジャーアップデートを開発する一方で現行バージョンのバグ修正をしたり
     h5 * いつどの変更でバグが生じたか確認したり
 
+// ファイルの共有、バックアップ
+// こんな風にリポジトリ間で連携してファイルの履歴を共有します
+section(class="slide")
+  h2 What's VCS
+  h3 Sharing Files
+  article#sharing
+
+// 構成管理
+// 本番と別の所で新機能開発したり、バグ修正したりしやすくなる
+// 新たにバグが出た時も、どの変更でバグが出たかがすぐに分かる
+section(class="slide")
+  h2 What's VCS
+  h3 Configulation management
+  article#scm
+
 // どれか使ったことある？
 section(class="slide")
   h2 What's VCS
-  h3 Have you ever use some VCS??
-  img(src='/images/some_vcs.png')
+  h3 Have you ever use any VCS??
+  article#vcs
+  //img(src='/images/some_vcs.png')
 
 // VCSは3種類に大別できます
 section(class="slide")
@@ -82,13 +101,19 @@ section(class="slide")
       tr
         td 集中型VCS
         td リポジトリをサーバで一元管理し、操作はクライアントから
-        td Subversion, CVS, Perforce
+        td
+          strong Subversion
+          , CVS, Perforce
       tr
         td 分散型VCS
         td リポジトリをクライアントでも管理する
         td
           strong Git
           , Mercurial, Bazaar
+
+// subversionも説明しとく
+section(class="slide")
+  h2 About Subversion
 
 // 特にGitはほにゃらら
 section(class="slide")
@@ -108,21 +133,53 @@ section(class="slide")
 // まずは基本的開発フローを説明するよ（一人で使う場合）
 section(class="slide")
   h2 WorkFlow
-  img(src='/images/git_about.png')
-  article#workflow
+  // img(src='/images/git_about.png')
+  article#gitAbout
     // canvas test
 
-// aaa
+// add
+section(class="slide")
+  h2 Working Tree -> Staging Area
+
+// commit
+section(class="slide")
+  h2 Staging Area -> Local Repository
+
+// push
+section(class="slide")
+  h2 Local Repository -> Remote Rpository
+
 
 // 実際にコマンドを叩いて説明するよ
 section(class="slide")
   h2 Try git command
-
+  h3 実際にデモします
   form(id="git_form", action="/javascripts/init.js", method="post")
     textarea(id="git_command", class="git_sh", cols="110", rows="10")
 
   br
   pre(id="git_result", class="sh_sh sh_sourceCode")
+
+// 複数人の場合はどうだろう
+
+
+// 先に説明した通り、gitは様々な開発スタイルが取れる
+
+// subversionっぽく共有リポジトリに直接コミットするスタイル
+
+// 各開発者の差分を管理者が一旦まとめてからリポジトリに反映するスタイル
+
+// それのもっと丁寧な奴
+
+// clone とか fetch とか mergeとか
+
+// 弊社におけるVCSの使い方
+// いままでsubversion使ってて今移行期だから、両方使うよ
+// subversionを使ってた今までの開発スタイル
+
+// 移行期の使い方
+
+// 移行後
 
 
 section(class="slide")
@@ -140,3 +197,4 @@ p(class="deck-status")
     span(class="deck-status-viewer")(0)
 
 
+script(type='text/javascript', src='/javascripts/init.js');
